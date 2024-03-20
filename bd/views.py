@@ -17,7 +17,7 @@ def select(request):
     resultado = total_suma['total_suma']
     total =  Gastos.objects.count()
     # Gastos.objects.create(nombre="pago salario",descripcion="la quincena", valor=487500,fecha="2024-03-18",categoria="sueldo")
-    result = list(Gastos.objects.all().values())
+    result = list(Gastos.objects.all().order_by("-fecha").values())
     return JsonResponse([resultado,result,total], safe=False)
 
 def update(request):
