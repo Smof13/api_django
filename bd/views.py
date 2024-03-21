@@ -15,10 +15,23 @@ def select(request):
 
     # Accede al resultado de la suma
     resultado = total_suma['total_suma']
+
     total =  Gastos.objects.count()
-    # Gastos.objects.create(nombre="pago salario",descripcion="la quincena", valor=487500,fecha="2024-03-18",categoria="sueldo")
+
     result = list(Gastos.objects.all().order_by("-fecha").values())
     return JsonResponse([resultado,result,total], safe=False)
+
+def detalle_gasto(request, gasto_id):
+        # Obtener el gasto específico por su ID
+        
+        gasto = list(Gastos.objects.filter(id=gasto_id).all().values())
+
+        if gasto == []:
+            return JsonResponse({'error': 'El gasto no existe'}, status=404)
+        else:
+            return JsonResponse(gasto, safe=False)
+
+
 
 def update(request):
 
@@ -45,6 +58,7 @@ def insert(request):
     
     return JsonResponse({"nada":"nada"})
 
+@csrf_exempt
 def delete(request):
     if request.method == 'POST':
         Gastos.objects.filter(id=request.POST.get('id')).delete()
@@ -52,5 +66,5 @@ def delete(request):
         data = {'info': "el usuario se a elimninado correctamente"}
 
         return JsonResponse(data)
-    return JsonResponse()
+    return JsonResponse({})
     
