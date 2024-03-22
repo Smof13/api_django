@@ -32,18 +32,18 @@ def detalle_gasto(request, gasto_id):
             return JsonResponse(gasto, safe=False)
 
 
-
-def update(request):
+@csrf_exempt
+def update(request, gasto_id):
 
     if request.method == 'POST':
-        firstUser = Gastos.objects.get(id=request.POST.get('id'))
+        gasto_id = Gastos.objects.get(id=request.POST.get('id'))
         
         Gastos.objects.filter(id=request.POST.get('id')).update(nombre=request.POST.get('nombre'),descripcion=request.POST.get('descripcion'),valor=request.POST.get('valor'), fecha=request.POST.get('fecha'),categoria=request.POST.get('categoria'))
 
         # lastUser = Gastos.objects.get(id=request.POST.get('id'))
 
         
-        result = {'info': f'Los datos de la persona {firstUser.id} han sido actualizados'}
+        result = {'info': f'Los datos de la persona {gasto_id.id} han sido actualizados'}
         return JsonResponse(result)
     return JsonResponse()
     
