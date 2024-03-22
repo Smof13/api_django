@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from bd.models import Gastos
 from datetime import datetime
 from django.db.models import Sum
+from django.views.decorators.csrf import csrf_protect
 
 
 # Create your views here.
@@ -33,19 +34,18 @@ def detalle_gasto(request, gasto_id):
 
 
 @csrf_exempt
-def update(request, gasto_id):
+def update(request):
 
     if request.method == 'POST':
-        gasto_id = Gastos.objects.get(id=request.POST.get('id'))
-        
+                
         Gastos.objects.filter(id=request.POST.get('id')).update(nombre=request.POST.get('nombre'),descripcion=request.POST.get('descripcion'),valor=request.POST.get('valor'), fecha=request.POST.get('fecha'),categoria=request.POST.get('categoria'))
 
         # lastUser = Gastos.objects.get(id=request.POST.get('id'))
 
         
-        result = {'info': f'Los datos de la persona {gasto_id.id} han sido actualizados'}
+        result = {'info': f'Los datos de la persona han sido actualizados'}
         return JsonResponse(result)
-    return JsonResponse()
+    return JsonResponse({"error": "error"})
     
 
 @csrf_exempt
