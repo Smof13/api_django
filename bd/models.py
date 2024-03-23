@@ -12,3 +12,12 @@ class Gastos(models.Model):
     
     def __str__(self):
         return self.nombre
+
+class login(models.Model):
+    id = models.AutoField(primary_key=True)
+    correo = models.CharField(max_length=40, null=False)
+    clave = models.CharField(max_length=100,null=True)
+    
+    def __str__(self):
+        return self.correo
+    
