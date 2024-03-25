@@ -62,12 +62,23 @@ def delete(request):
         return JsonResponse(data)
     return JsonResponse({})
     
-def login(request):
-    if request.method == 'POST':
-        # Inserta los campos con los datos que llegan de la web   
-        Gastos.objects.create(correo=request.POST.get('correo'),clave=request.POST.get('contra'))
+# @csrf_exempt
+# def login(request):
+#     if request.method == 'POST':
 
-        data = {'info': "el usuario se a ingresado correctamente"}
-        return JsonResponse(data,safe=False)
-    
-    return JsonResponse({"nada":"los datos de la persona no han sido ingresados"})
+#         usuario = "admin@gmail.com"
+#         contra = "money19"
+
+#         correo2 = request.POST.get('correo')
+#         contra2 = request.POST.get('contra')
+
+#         # Comparar las credenciales con las credenciales almacenadas
+#         if usuario == correo2 and contra == contra2:
+#             # Autenticación exitosa
+#             data = {'info': "autenticado"}
+#             return JsonResponse(data)
+#         else:
+#             # Credenciales inválidas
+#             return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+
+#     return JsonResponse({"error":"los datos de la persona no han sido ingresados"})
